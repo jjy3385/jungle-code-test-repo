@@ -12,12 +12,10 @@ def is_prime(n):
     return True
 
 for num in A:
-    half = int(num/2)
-    plus = half
-    minus = half
+    minus,plus = num//2,num//2
     while True:
-        if is_prime(plus) and is_prime(minus):
+        if is_prime(minus) and is_prime(plus):
             break
-        plus += 1
         minus -= 1
+        plus += 1 
     print(minus,plus)
