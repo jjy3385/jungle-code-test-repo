@@ -1,21 +1,21 @@
-T = int(input())
-A = []
-for i in range(T):
-    A.append(int(input()))
+import sys
+T = int(sys.stdin.readline())
+
+li = []
+for _ in range(T):
+    li.append(int(sys.stdin.readline()))
 
 def is_prime(n):
     if n == 1:
         return False
-    for i in range(2,int(n**0.5) + 1):
+    for i in range(2,int(n**0.5)+1):
         if n % i == 0:
             return False
     return True
 
-for num in A:
-    minus,plus = num//2,num//2
-    while True:
-        if is_prime(minus) and is_prime(plus):
+for i in range(T):
+    half = li[i]//2
+    for j in range(half):
+        if is_prime(half-j) and is_prime(half+j):
+            print(f"{half-j} {half+j}")
             break
-        minus -= 1
-        plus += 1 
-    print(minus,plus)
