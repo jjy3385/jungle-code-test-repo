@@ -1,11 +1,24 @@
-from itertools import permutations
 N = int(input())
-A = map(int,input().split())
+A = list(map(int,input().split()))
+visited = [False] * N
+path = []
+max_values = []
+def dfs(n):
+    global max_value
+    # base case
+    if n == N:
+        # print(path)
+        max_values.append(sum([abs(path[i] - path[i+1]) for i in range(N-1)]))
+        return
+    
+    for i in range(N):
+        if not visited[i]:
+            visited[i] = True
+            path.append(A[i])
+            dfs(n+1)
+            visited[i] = False
+            path.pop()
 
-results = []
-for x in list(permutations(A,N)):
-    max_sum = 0
-    for i in range(N-1):
-        max_sum += abs(x[i+1] - x[i])
-    results.append(max_sum)
-print(max(results))
+dfs(0)
+
+print(max(max_values))
