@@ -9,15 +9,14 @@ dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
 
 
-def find_safety_zone(rain,x,y,visited):
+def find_satety_zone(rain, x, y, visited):
 
     for m in range(4):
         nx = x + dx[m]
         ny = y + dy[m]
-        if (0 <= nx < N) and (0 <= ny < N) and W[nx][ny] > rain and not visited[nx][ny]:
+        if (0<= nx < N) and (0<= ny < N) and W[nx][ny] > rain and not visited[nx][ny]:
             visited[nx][ny] = True
-            find_safety_zone(rain,nx,ny,visited)
-
+            find_satety_zone(rain,nx,ny,visited)
 
 max_counts = []
 for rain in range(101):
@@ -26,9 +25,8 @@ for rain in range(101):
     for i in range(N):
         for j in range(N):
             if W[i][j] > rain and not visited[i][j]:
-                count+= 1
-                find_safety_zone(rain,i,j,visited)
+                count += 1
+                find_satety_zone(rain, i, j, visited)
     max_counts.append(count)
 
 print(max(max_counts))
-
