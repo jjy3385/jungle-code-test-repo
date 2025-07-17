@@ -1,17 +1,21 @@
-N = input()
-if len(N) == 1:
-    N = "0" + N    
+n = int(input())
+# x (x=n) -> a+b 로 만든다
+# a = x/10, b = x%10
+# a+b -> c 라고 하면
+# 다음 x = b*10+c%10
+cnt = 0
+x = n
+while(True):
+    cnt += 1
+    if x >= 10:
+        a = x//10
+        b = x%10
+        c = a+b
+        x = b*10 + c%10
+    elif x < 10:
+        x = x*10+x
 
-cycle = 0
-num = N
-while True:
-    temp = int(num[0]) + int(num[1])
-    if temp < 10:
-        temp = "0" + str(temp)    
-    # print(temp)
-    num = num[1] + str(temp)[1]
-    cycle += 1
-    # print(f"num: {num}, cycle: {cycle}")
-    if num == N:
+    if x == n:
         break
-print(cycle)
+
+print(cnt)
