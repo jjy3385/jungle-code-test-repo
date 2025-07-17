@@ -1,31 +1,23 @@
-import sys
+lst = [1,2,3]
+t = int(input())
 
-sys.setrecursionlimit(10**6)
-T = int(input())
-nums = [int(input()) for _ in range(T)]
+cnt = 0
+def perm(n):
+    def dfs(total):
+        global cnt
+        if total > n:
+            return
+        if total == n:
+            cnt += 1
+            return
 
-coins = [1, 2, 3]
-
-def get_coins(num, remain):
-    global count 
-    # base case
-    if sum(paths) >= num:
-        if sum(paths) == num: 
-            # print(f"num = {num},paths = {paths}")    
-            count += 1
-
-        return
-
-    for i in range(3):
-        paths.append(coins[i])
-        # print(paths)
-        get_coins(num, remain - coins[i])
-        paths.pop()
-
-for i in range(T):
-    paths = []
-    count = 0
-    get_coins(nums[i], nums[i])
-    print(count)
+        for i in range(3):
+            dfs(total+lst[i])
+    dfs(0)
 
 
+for i in range(t):
+    n = int(input())
+    perm(n)
+    print(cnt)
+    cnt = 0
