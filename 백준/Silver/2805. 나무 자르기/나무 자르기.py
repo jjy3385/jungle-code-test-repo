@@ -11,11 +11,8 @@ while min_h <= max_h:
 
     mid_h = (min_h + max_h) // 2
 
-    sum_h = 0
-    for i in range(N):
-        if A[i] > mid_h:
-            sum_h += A[i] - mid_h
-    
+    sum_h = sum(a - mid_h for a in A if a > mid_h)
+
     if sum_h >= M:
         res = mid_h
         min_h = mid_h + 1
@@ -23,4 +20,3 @@ while min_h <= max_h:
         max_h = mid_h - 1
 
 print(res)
-
