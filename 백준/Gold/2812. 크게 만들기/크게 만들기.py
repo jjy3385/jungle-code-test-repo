@@ -3,7 +3,7 @@ import sys
 
 input = sys.stdin.readline
 N, K = map(int, input().rstrip().split())
-nums = input().strip()
+nums = input().rstrip()
 
 stack = []
 
