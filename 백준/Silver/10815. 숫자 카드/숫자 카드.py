@@ -1,41 +1,31 @@
-# 가지고 있는 숫자 카드의 개수 N
-# 숫자 카드에 적혀있는 정수 cards - 상근이가 갖고 있는 수
-# check_num 은 상근이가 갖고 있는지 확인해야하는 수
-
 import sys
-
 input = sys.stdin.readline
-N = int(input().rstrip())
-cards = list(map(int, input().rstrip().split()))
-M = int(input().rstrip())
-check_num = list(map(int, input().rstrip().split()))
 
-cards = sorted(cards)
+n=int(input())
+n_card = list(map(int, input().split()))
+m=int(input())
+m_card = list(map(int, input().split()))
 
+n_card.sort()
 
-def bsearch(target):
+a=[0]*m
 
-    result = False
-    left = 0
-    right = N - 1
+def sol(start, end, i):
 
-    while left <= right:
+    while start < end:
+        mid = (start + end) //2
 
-        mid = (left + right) // 2
-
-        if target == cards[mid]:
-            result = True
-            break
-        elif target < cards[mid]:
-            right = mid - 1
+        if  n_card[mid] == m_card[i]:
+            a[i] = 1
+            return
+        elif n_card[mid] > m_card[i]:
+            end = mid
         else:
-            left = mid + 1
-
-    return result
+            start = mid + 1
 
 
-for i in range(M):
-    if bsearch(check_num[i]):
-        print(1, end=" ")
-    else:
-        print(0, end=" ")
+for i in range(m):
+    sol(0, n, i)
+
+for i in a:
+    print(i, end=' ')
