@@ -1,28 +1,23 @@
 import sys
-input=sys.stdin.readline
 
-n=input().rstrip()
-key=input().rstrip()
-kk=[]
-for i in key:
-    kk.append(i)
+input = sys.stdin.readline
 
-cnt=len(key)
-stack=[]
+check_str = input().rstrip()
+ex_str = list(input().rstrip())
 
+stack = []
+length = len(ex_str)
 
-for i in n:
+for i in check_str:
     stack.append(i)
-    # print(stack)
-    if stack[-cnt:] == kk:
-        for j in range(cnt):
-            stack.pop()
-            # print(stack)
-            if not stack:
-                break
 
-if not stack:
-    print('FRULA')
+    # 슬라이싱 아직 헷갈림/ 활용 자체도 못하는듯
+    if stack[-length:] == ex_str:
+        for _ in range(length):
+            stack.pop()
+
+
+if stack:
+    print("".join(stack))
 else:
-    for i in stack:
-        print(i,end='')
+    print("FRULA")
