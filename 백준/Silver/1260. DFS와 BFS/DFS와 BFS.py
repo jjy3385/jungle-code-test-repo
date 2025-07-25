@@ -1,5 +1,8 @@
+
 import sys
-from collections import deque
+from collections import defaultdict, deque
+
+# sys.stdin = open("input.txt", "r")
 
 input = sys.stdin.readline
 # 정점의 개수 N
@@ -7,39 +10,36 @@ input = sys.stdin.readline
 # 시작정점 V
 N, M, V = map(int, input().rstrip().split())
 
-# 인접리스트 초기화
-# 정점의 개수 + 1 하는 이유는 인덱스 1부터 사용하기 위해서임
-graph = [[] for _ in range(N + 1)]
-
-
-# 간선이 연결하는 두 정점의 번호
+# 1.그래프의 표현 - 인접리스트
+graph = defaultdict(list)
 for _ in range(M):
     a, b = map(int, input().rstrip().split())
     graph[a].append(b)
     graph[b].append(a)
 
 
-# 정점 번호가 작은 순서대로 방문해야 하므로 리스트 정렬
+# 2.그래프 정렬 -  필요함
+# 다음 방문 정점이 결정되기 때문에 결과가 달라짐
 for i in range(1, N + 1):
     graph[i].sort()
 
-# 그래프 확인용 출력
-# for i in range(1, N + 1):
-#     print(f"{i} => {graph[i]}")
 
-
-# dfs 는 재귀/스택
+# dfs - 재귀
 def dfs(v, visited):
+    # base case
     visited[v] = True
     print(v, end=" ")
-    for next_v in graph[v]:
-        if not visited[next_v]:
-            dfs(next_v, visited)
+
+    for i in graph[v]:
+        if not visited[i]:
+            dfs(i, visited)
 
 
-# bfs 는 큐
+# bfs - 큐
 def bfs(v):
     visited = [False] * (N + 1)
+
+    # 시작정점 방문처리
     queue = deque([v])
     visited[v] = True
 
