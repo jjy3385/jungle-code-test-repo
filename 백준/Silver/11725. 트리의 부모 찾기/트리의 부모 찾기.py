@@ -1,6 +1,5 @@
 import sys
-from collections import defaultdict
-sys.setrecursionlimit(10**6)
+from collections import defaultdict,deque
 
 input = sys.stdin.readline
 
@@ -8,6 +7,7 @@ N = int(input().rstrip())
 edges = [tuple(map(int, input().rstrip().split())) for _ in range(N - 1)]
 
 tree = defaultdict(list)
+# tree = [[] for _ in range(N + 1)]
 
 # 인접리스트로 표현
 for i in range(N - 1):
@@ -15,23 +15,21 @@ for i in range(N - 1):
     tree[a].append(b)
     tree[b].append(a)
 
-
-# dfs 기본형태에 추적하려는 걸 하나 더 파라미터로 추가함
-# 여기선 부모
-def dfs(node, visited, parent):
-    visited[node] = True
+def bfs(node):
+    parent = [0] * (N + 1)  # 인덱스 - 현재노드, 값 - 부모노드
+    visited = [False] * (N + 1)
+    queue = deque([node])
     
-    # print(node, end=" ")
-    for next_node in tree[node]:
-        if not visited[next_node]:
-            parent[next_node] = node
-            dfs(next_node, visited,parent)
-            
+    while queue:
+        present = queue.popleft()
+        for next_node in tree[present]:        
+            if not visited[next_node]:
+                visited[next_node] = True
+                queue.append(next_node)
+                parent[next_node] = present
 
 
-visited = [False] * (N + 1)
-parent = [1] * (N + 1)
-dfs(1, visited, parent)
+    print("\n".join(str(parent[i]) for i in range(2, N + 1)))
 
-for i in range(2,N+1):
-    print(parent[i])
+
+bfs(1)
