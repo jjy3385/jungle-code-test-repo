@@ -1,8 +1,6 @@
 import sys
 from collections import defaultdict
 
-sys.setrecursionlimit(10**6)
-
 input = sys.stdin.readline
 
 # 정점의 개수
