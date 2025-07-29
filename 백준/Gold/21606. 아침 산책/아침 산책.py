@@ -1,6 +1,8 @@
 import sys
 from collections import defaultdict
 
+sys.setrecursionlimit(10**6)
+
 input = sys.stdin.readline
 
 # 정점의 개수
@@ -22,38 +24,45 @@ for _ in range(N - 1):
     graph[u].append(v)
     graph[v].append(u)
 
-# 서로 다른 산책 경로의 수를 구하라
-# 실외에서 시작되고 다시 실외를 찾으면 +1 한다고 생각하면 됨
+    
+ans = 0
+# path = []
 visited = [False] * (N + 1)
 
 
-# 이 함수가 하는 일이 뭐지?
-# 주변 탐색하는거임
-# 무조건 실내임
-# 실외로 가면 + 1
-def dfs(start):
-    res = 0 
-    for next_node in graph[start]:
-        if is_out[next_node] == 0:
-            if not visited[next_node]:
-                visited[next_node] = True
-                res += dfs(next_node)
-        else:
-            res += 1
-    return res
-
-
-answer = 0
+# 1. 실외가 없는 경우 - 실내끼리 이어진 경우
 for i in range(1, N + 1):
-    if is_out[i] == 0:
-        if not visited[i]:
-            visited[i] = True
-            result = dfs(i)
-            answer = result * (result - 1)
-    else:
-        for next_node in graph[i]:
-            if is_out[next_node] == 1:
-                answer += 1
+    if is_out[i] == 1:
+        # path.append(i)
+        for next_place in graph[i]:
+            if is_out[next_place] == 1:
+                # path.append(next_place)
+                ans += 1
 
+def dfs_stack(start):
+    result = 0
+    stack = [start]
+    visited[start] = True
 
-print(answer)
+    while stack:
+        node = stack.pop()
+        for next_node in graph[node]:
+             if not visited[next_node]:
+                if is_out[next_node] == 1:
+                    result += 1
+                else:
+                    visited[next_node] = True
+                    stack.append(next_node)
+    
+    return result
+
+# 실외를 기준으로 DFS 해서 실내로 끝나는 경우의 수를 찾기
+for i in range(1, N + 1):
+    if is_out[i] == 0 and not visited[i]:
+        # path.append(i)
+        temp = dfs_stack(i)
+        # path.pop()
+        ans += temp * (temp - 1)
+
+# print(path)
+print(ans)
