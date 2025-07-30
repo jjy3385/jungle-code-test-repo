@@ -1,49 +1,47 @@
 import sys
 import heapq
+from collections import defaultdict
 
 input = sys.stdin.readline
 
-# 도시의 개수 (노드)
+# 도시의 수
 N = int(input().rstrip())
-# 버스의 개수 (간선)
+# 버스의 수
 M = int(input().rstrip())
-# 출발지/도착지/비용
-bus = [tuple(map(int, input().rstrip().split())) for _ in range(M)]
-# 구하고자 하는 구간 출발 - 도착 도시
-goal = tuple(map(int, input().rstrip().split()))
-# 최소 비용을 구하라
-# 경로가 정해진 경우의 최소 비용 구하기...
 
-
-# 일단 비용없이 경로 구하기를 bfs 로 만들어보자
-graph = [[] for _ in range(N + 1)]
-
-
-# 거리 배열
-INF = int(1e9)
-distance = [INF] * (N + 1)
-
+edges = defaultdict(list)
+# 연결정보 출발/도착/비용
 for i in range(M):
-    u, v, w = bus[i]
-    graph[u].append((v, w))
+    s, e, c = map(int, input().rstrip().split())
+    edges[s].append((e, c))
 
-def dij(start):
-    q = []
-    heapq.heappush(q, (0, start))
+# 출발지,도착지
+start, end = map(int, input().rstrip().split())
+
+distance = [int(1e9)] * (N + 1)
+
+
+def dijkstra(start,end):
+    heap = []
+    heapq.heappush(heap, (0, start))
     distance[start] = 0
 
-    while q:
-        dist, now = heapq.heappop(q)
+    while heap:
+        dist, node = heapq.heappop(heap)
 
-        if dist > distance[now]:
+        if node == end:
+            print(distance[node])
+            sys.exit(0)
+
+        if dist > distance[node]:
             continue
 
-        for next_node, weight in graph[now]:
-            cost = dist + weight
-            if cost < distance[next_node]:
-                distance[next_node] = cost
-                heapq.heappush(q, (cost, next_node))
+        for next_node, next_dist in edges[node]:
+            new_dist = next_dist + dist
+            if distance[next_node] > new_dist:
+                distance[next_node] = new_dist
+                heapq.heappush(heap, (new_dist, next_node))
 
-dij(goal[0])
 
-print(distance[goal[1]])
+dijkstra(start,end)
+# print(distance[end])
