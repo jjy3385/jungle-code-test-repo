@@ -1,51 +1,39 @@
 import sys
-from collections import deque
 
 input = sys.stdin.readline
-# 정사각형의 크기 N ,
-N = int(input().rstrip())
 
-# 단지 이차월 배열
-danji = [[0] * N for _ in range(N)]
+n = int(input())
+maps = []
 
-for i in range(N):
-    inputs = input().rstrip()
-    for j in range(N):
-        danji[i][j] = int(inputs[j])
+for _ in range(n):
+    maps.append(list(input().strip()))
+
+cnts = []
+visited = [[False] * n for _ in range(n)]
+
+dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 
+# 현재 집에서 이어진 집의 개수를 반환
+def chk_house(y, x):
+    cnt = 1
+    for dy, dx in dirs:
+        ny, nx = y + dy, x + dx
+        if ny < 0 or nx < 0 or ny >= n or nx >= n or maps[ny][nx] == "0":
+            continue
+        if visited[ny][nx]:
+            continue
+        visited[ny][nx] = True
+        cnt += chk_house(ny, nx)
+    return cnt
 
-visited = [[False] * N for _ in range(N)]
 
-def bfs(x, y):
-    queue = deque([(x, y)])
-    visited[x][y] = True
+for i in range(n):
+    for j in range(n):
+        if not visited[i][j] and maps[i][j] == "1":
+            visited[i][j] = True
+            cnts.append(chk_house(i, j))
 
-    # 상하좌우
-    dx = [-1, 1, 0, 0]
-    dy = [0, 0, -1, 1]
-
-    count = 1
-    while queue:
-        qx, qy = queue.popleft()
-
-        for i in range(4):
-            nx = qx + dx[i]
-            ny = qy + dy[i]
-
-            if ((0 <= nx < N) and (0 <= ny < N)) and danji[nx][ny] == 1:
-                if not visited[nx][ny]:
-                    count += 1
-                    visited[nx][ny] = True
-                    queue.append((nx, ny))
-    return count
-                    
-res = []
-for i in range(N):
-    for j in range(N):
-        if not visited[i][j] and danji[i][j] == 1:
-            res.append(bfs(i,j))
-
-res.sort()
-print(len(res))
-print("\n".join(map(str,res)))
+print(len(cnts))
+for cnt in sorted(cnts):
+    print(cnt)
