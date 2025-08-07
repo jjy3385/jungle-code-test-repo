@@ -1,4 +1,3 @@
-
 import sys
 
 input = sys.stdin.readline
@@ -17,7 +16,4 @@ for coin in coins:
         dp[i] = min(dp[i], dp[i - coin] + 1)
     # print(dp)
 
-if dp[N] == INF:
-    print(-1)
-else:
-    print(dp[N])
+print(dp[N]) if dp[N] != INF else print(-1)
