@@ -1,19 +1,21 @@
+
 import sys
 
-input = sys.stdin.readline
-# 거스름돈의 액수
-N = int(input().rstrip())
 
-INF = int(1e9)
-# 동전
+N = int(sys.stdin.readline())
+
 coins = [2, 5]
 
-# dp정의
-dp = [INF] * (N + 1)
-dp[0] = 0
-for coin in coins:
-    for i in range(coin, N + 1):
-        dp[i] = min(dp[i], dp[i - coin] + 1)
-    # print(dp)
+coin_dp = [float("inf")] * (N + 1)
 
-print(dp[N]) if dp[N] != INF else print(-1)
+coin_dp[0] = 0
+
+
+for i in range(2, N + 1):
+    if i < 5:
+        coin_dp[i] = coin_dp[i - 2] + 1
+    else:
+        coin_dp[i] = min(coin_dp[i - 2] + 1, coin_dp[i - 5] + 1)
+
+result = coin_dp[-1] if coin_dp[-1] != float("inf") else -1
+print(result)
