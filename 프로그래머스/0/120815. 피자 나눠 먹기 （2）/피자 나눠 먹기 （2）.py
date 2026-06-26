@@ -5,8 +5,5 @@ def solution(n):
         a, b = b, a % b
     
     lcm = int(6 * n / a)
-    print()
-    
-    
     answer = lcm / 6
     return answer
