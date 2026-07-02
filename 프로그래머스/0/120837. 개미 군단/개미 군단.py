@@ -1,7 +1,3 @@
 def solution(hp):
-    answer = hp // 5
-    remain = hp % 5
-    answer += remain // 3
-    remain = remain % 3
-    answer += remain
+    answer = hp // 5 + hp % 5 // 3 + hp % 5 % 3
     return answer
