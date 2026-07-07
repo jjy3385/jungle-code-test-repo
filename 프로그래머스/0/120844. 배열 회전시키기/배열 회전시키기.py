@@ -1,12 +1,6 @@
 def solution(numbers, direction):
-    answer = []
-    lastIdx = len(numbers) - 1
     if direction == "right":
-        answer.append(numbers[lastIdx])
-        for i in range(lastIdx):
-            answer.append(numbers[i])
+        answer = [numbers[-1]] + numbers[:len(numbers)-1]
     else:
-        for i in range(1,lastIdx+1):
-            answer.append(numbers[i])  
-        answer.append(numbers[0])
+        answer = numbers[1:] + [numbers[0]]
     return answer
