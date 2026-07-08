@@ -4,10 +4,6 @@ def solution(n):
     for i in range(1,11):
         fact *= i
         if fact > n:
-            answer = i - 1
             break
-        elif fact == n:
-            answer = i
-            break
-    
+        answer = i
     return answer
