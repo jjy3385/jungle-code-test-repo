@@ -1,3 +1,3 @@
 def solution(my_string):
-    answer = ''.join([ch.swapcase() for ch in my_string])
-    return answer
+    # answer = ''.join([ch.swapcase() for ch in my_string])
+    return my_string.swapcase()
