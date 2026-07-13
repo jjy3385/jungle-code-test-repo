@@ -1,11 +1,9 @@
 def solution(my_string):
     answer = 0
     s = my_string.split(" ")
-    op = ''
+    op = '+'
     for ch in s:
-        if ch == '+':
-            op = ch
-        elif ch == '-':
+        if ch in ['+','-']:
             op = ch
         else:
             if op == '-':
