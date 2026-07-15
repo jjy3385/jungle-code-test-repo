@@ -1,3 +1,2 @@
-import math
 def solution(n):
-    return 1 if math.sqrt(n) == int(math.sqrt(n)) else 2
+    return 1 if n ** 0.5 == int(n ** 0.5) else 2
