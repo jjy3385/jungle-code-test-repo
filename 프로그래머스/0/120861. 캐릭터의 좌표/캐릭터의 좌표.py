@@ -12,8 +12,8 @@ def solution(keyinput, board):
             dy = +1
         
         if abs(x + dx) <= board[0] // 2:
-            x = x + dx
+            x += dx
         if abs(y + dy) <= board[1] // 2:
-            y = y + dy
+            y += dy
 
     return [x,y]
