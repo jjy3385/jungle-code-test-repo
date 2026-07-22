@@ -10,10 +10,11 @@ def solution(babbling):
                     found = True
                     break
                     
-            if b == '':
-                answer += 1
-                
             # 옹알이를 못찾으면 while break    
             if found == False:
                 break
+                
+        if b == '':
+            answer += 1
+            
     return answer
