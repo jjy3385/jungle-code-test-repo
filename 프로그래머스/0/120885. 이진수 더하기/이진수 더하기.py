@@ -1,5 +1,5 @@
 def solution(bin1, bin2):
-    answer = ''
+    answer = []
     length = max(len(bin1),len(bin2))
     bin1,bin2 = bin1.zfill(length),bin2.zfill(length)
     carry = 0
@@ -7,9 +7,9 @@ def solution(bin1, bin2):
         total = int(x) + int(y) + carry
         curr = total % 2
         carry = total // 2
-        answer += str(curr)
+        answer.append(str(curr))
     
     if carry:
-        answer += str(carry)
+        answer.append(str(carry))
     
-    return answer[::-1]
+    return ''.join(answer[::-1])
