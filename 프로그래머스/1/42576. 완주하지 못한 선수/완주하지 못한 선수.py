@@ -1,5 +1,4 @@
 def solution(participant, completion):
-    answer = ''
     count = {}
     for p in participant:
         count[p] = count.get(p,0) + 1
@@ -10,4 +9,3 @@ def solution(participant, completion):
     for n,c in count.items():
         if c == 1:
             return n
-    return answer
